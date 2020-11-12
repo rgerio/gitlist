@@ -1,8 +1,10 @@
 import React from 'react';
 
+import Dashboard from './pages/Dashboard';
+
 const App: React.FC = () => {
   return (
-    <h1>It's working</h1>
+    <Dashboard />
   );
 };
 
