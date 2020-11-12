@@ -1,11 +1,17 @@
 import React from 'react';
 
-import { Container } from './styles';
+import { Container, Header } from './styles';
 
 const Dashboard: React.FC = () => {
   return (
     <Container>
-      <h1>Dashboard</h1>
+      <Header>
+        <img
+          src="https://pngimg.com/uploads/github/github_PNG24.png"
+          alt="Gitlist logo"
+        />
+      </Header>
+      <p>Dashboard</p>
     </Container>
   );
 };
