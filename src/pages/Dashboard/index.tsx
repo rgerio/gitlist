@@ -1,29 +1,23 @@
 import React from 'react';
-import { FiCode, FiPlus } from 'react-icons/fi';
+import { FiPlus } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 
 import {
   Container,
-  Header,
-  HeaderContent,
   Main,
   RepositoriesPanel,
-  RepositoryDetailsPanel,
-  AboutOwnerPanel,
   SectionTitle,
   Form,
-  RepositoriesList,
+  RepositoryList,
 } from './styles';
 
-import logoImg from '../../assets/img/gitlist_logo.png';
+import Header from '../../components/Header';
 
 const Dashboard: React.FC = () => {
   return (
     <Container>
-      <Header>
-        <HeaderContent>
-          <img src={logoImg} alt="Gitlist" />
-        </HeaderContent>
-      </Header>
+      <Header />
+
       <Main>
         <RepositoriesPanel>
           <SectionTitle>Repositories</SectionTitle>
@@ -36,48 +30,33 @@ const Dashboard: React.FC = () => {
             </button>
           </Form>
 
-          <RepositoriesList>
+          <RepositoryList>
             <li>
-              <a href="/">
+              <Link to="repository/fulanosilva/repo-01">
                 <div>
-                  <FiCode size={20} />
+                  <img src="https://github.com/example.png" alt="User" />
                 </div>
                 fulanosilva/repo-01
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/">
+              <Link to="repository/fulanosilva/repo-01">
                 <div>
-                  <FiCode size={20} />
+                  <img src="https://github.com/example.png" alt="User" />
                 </div>
                 user/another-repo-with-a-very-very-very-very-long-name
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/">
+              <Link to="repository/fulanosilva/repo-01">
                 <div>
-                  <FiCode size={20} />
+                  <img src="https://github.com/example.png" alt="User" />
                 </div>
                 another-user/repo-01
-              </a>
+              </Link>
             </li>
-          </RepositoriesList>
+          </RepositoryList>
         </RepositoriesPanel>
-        <RepositoryDetailsPanel>
-          <div>
-            <img src="https://github.com/example.png" alt="User" />
-            <h2>fulanosilva/repo-01</h2>
-          </div>
-          <p>Distributed platform for building autonomic network functions.</p>
-        </RepositoryDetailsPanel>
-        <AboutOwnerPanel>
-          <img src="https://github.com/example.png" alt="User" />
-          <h1>Fulano da Silva</h1>
-          <p>
-            Frontend developer at Github. Creates inspiring screens that
-            represents how human beings interact with the real world
-          </p>
-        </AboutOwnerPanel>
       </Main>
     </Container>
   );
