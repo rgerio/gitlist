@@ -4,6 +4,7 @@ import { FiCode, FiPlus } from 'react-icons/fi';
 import {
   Container,
   Header,
+  HeaderContent,
   Main,
   RepositoriesPanel,
   RepositoryDetailsPanel,
@@ -17,10 +18,12 @@ const Dashboard: React.FC = () => {
   return (
     <Container>
       <Header>
-        <img
-          src="https://pngimg.com/uploads/github/github_PNG24.png"
-          alt="Gitlist logo"
-        />
+        <HeaderContent>
+          <img
+            src="https://pngimg.com/uploads/github/github_PNG24.png"
+            alt="Gitlist"
+          />
+        </HeaderContent>
       </Header>
       <Main>
         <RepositoriesPanel>
@@ -40,7 +43,7 @@ const Dashboard: React.FC = () => {
                 <div>
                   <FiCode size={20} />
                 </div>
-                user/repo-01
+                fulanosilva/repo-01
               </a>
             </li>
             <li>
@@ -62,11 +65,19 @@ const Dashboard: React.FC = () => {
           </RepositoriesList>
         </RepositoriesPanel>
         <RepositoryDetailsPanel>
-          <h1>Repository Details: user/repo-01</h1>
-          <p>To begin, add a repository...</p>
+          <div>
+            <img src="https://github.com/example.png" alt="User" />
+            <h2>fulanosilva/repo-01</h2>
+          </div>
+          <p>Distributed platform for building autonomic network functions.</p>
         </RepositoryDetailsPanel>
         <AboutOwnerPanel>
-          <h1>Fulano is the owner and a great dev</h1>
+          <img src="https://github.com/example.png" alt="User" />
+          <h1>Fulano da Silva</h1>
+          <p>
+            Frontend developer at Github. Creates inspiring screens that
+            represents how human beings interact with the real world
+          </p>
         </AboutOwnerPanel>
       </Main>
     </Container>
