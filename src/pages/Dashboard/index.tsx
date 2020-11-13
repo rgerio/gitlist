@@ -14,15 +14,14 @@ import {
   RepositoriesList,
 } from './styles';
 
+import logoImg from '../../assets/img/gitlist_logo.png';
+
 const Dashboard: React.FC = () => {
   return (
     <Container>
       <Header>
         <HeaderContent>
-          <img
-            src="https://pngimg.com/uploads/github/github_PNG24.png"
-            alt="Gitlist"
-          />
+          <img src={logoImg} alt="Gitlist" />
         </HeaderContent>
       </Header>
       <Main>
