@@ -32,7 +32,7 @@ const Dashboard: React.FC = () => {
 
           <RepositoryList>
             <li>
-              <Link to="repository/fulanosilva/repo-01">
+              <Link to="repository/facebook/react">
                 <div>
                   <img src="https://github.com/example.png" alt="User" />
                 </div>
@@ -40,7 +40,7 @@ const Dashboard: React.FC = () => {
               </Link>
             </li>
             <li>
-              <Link to="repository/fulanosilva/repo-01">
+              <Link to="repository/facebook/react-native">
                 <div>
                   <img src="https://github.com/example.png" alt="User" />
                 </div>
@@ -48,7 +48,7 @@ const Dashboard: React.FC = () => {
               </Link>
             </li>
             <li>
-              <Link to="repository/fulanosilva/repo-01">
+              <Link to="repository/facebook/react">
                 <div>
                   <img src="https://github.com/example.png" alt="User" />
                 </div>
