@@ -33,20 +33,82 @@ export const RepositoryDetailsPanel = styled.div`
     }
 
     img {
-      width: 72px;
-      height: 72px;
+      width: 80px;
+      height: 80px;
       border-radius: 50%;
-      margin-right: 16px;
     }
 
-    h2 {
-      font-weight: 600;
-      font-size: 24px;
+    div {
+      margin-left: 16px;
+
+      h2 {
+        font-weight: 600;
+        font-size: 28px;
+      }
+
+      p {
+        color: rgb(106, 115, 125);
+        margin-top: 4px;
+      }
     }
   }
 
   p {
     font-size: 16px;
+  }
+`;
+
+export const RepositoryStatusList = styled.ul`
+  list-style: none;
+  display: flex;
+  margin-top: 56px;
+  width: 100%;
+
+  li {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    background: #aaaaaa20;
+    flex: 1;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+
+    &:last-child {
+      flex: 1.4;
+
+      strong {
+        font-size: 20px;
+      }
+    }
+
+    &:hover {
+      background-color: #aaaaaa40;
+    }
+
+    & + li {
+      margin-left: 8px;
+    }
+
+    div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 20px;
+
+      svg {
+        margin-right: 8px;
+      }
+
+      span {
+        font-size: 12px;
+      }
+    }
+
+    strong {
+      font-size: 24px;
+      margin-top: 8px;
+      margin: 8px auto 0;
+    }
   }
 `;
 
@@ -151,7 +213,7 @@ export const UserPublicRepoList = styled.ul`
     flex-direction: column;
     padding: 16px;
     background: #aaaaaa10;
-    width: 50%;
+    flex: 1;
     border-radius: 8px;
     transition: background-color 0.2s;
 

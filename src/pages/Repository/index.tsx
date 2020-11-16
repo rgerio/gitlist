@@ -1,11 +1,22 @@
 import React, { useEffect, useState } from 'react';
-
 import { useParams } from 'react-router-dom';
-import { FiCode, FiGlobe, FiLink, FiMapPin } from 'react-icons/fi';
+import { format } from 'date-fns';
+import {
+  FiAlertCircle,
+  FiCode,
+  FiGitCommit,
+  FiGithub,
+  FiGlobe,
+  FiLink,
+  FiMapPin,
+  FiStar,
+  FiTag,
+} from 'react-icons/fi';
 import {
   Container,
   Main,
   RepositoryDetailsPanel,
+  RepositoryStatusList,
   AboutOwnerPanel,
   UserDetailsList,
   UserPublicRepoList,
@@ -26,6 +37,10 @@ interface Repository {
     login: string;
     avatar_url: string;
   };
+  stargazers_count: number;
+  watchers_count: number;
+  forks_count: number;
+  open_issues_count: number;
 }
 
 interface User {
@@ -39,10 +54,27 @@ interface User {
   public_gists: number;
 }
 
+interface Release {
+  html_url: string;
+  tag_name: string;
+  published_at: string;
+}
+
+interface Commit {
+  commit: {
+    author: {
+      date: string;
+    };
+    url: string;
+  };
+}
+
 const Repository: React.FC = () => {
   const params = useParams<RepositoryParams>();
   const [repository, setRepository] = useState<Repository>();
   const [user, setUser] = useState<User>();
+  const [latestRelease, setLatestRelease] = useState<Release>();
+  const [latestCommit, setLatestCommit] = useState<Commit>();
 
   useEffect(() => {
     api.get<Repository>(`repos/${params.repository}`).then((response) => {
@@ -53,6 +85,16 @@ const Repository: React.FC = () => {
         .then((userResponse) => {
           setUser(userResponse.data);
         });
+    });
+
+    api
+      .get<Release[]>(`repos/${params.repository}/releases`)
+      .then((response) => {
+        setLatestRelease(response.data[0]);
+      });
+
+    api.get<Commit[]>(`repos/${params.repository}/commits`).then((response) => {
+      setLatestCommit(response.data[0]);
     });
   }, [params.repository]);
 
@@ -71,10 +113,63 @@ const Repository: React.FC = () => {
               }
               alt="User"
             />
-            <h2>{repository ? repository.full_name : 'Loading...'}</h2>
+
+            <div>
+              <h2>{repository ? repository.full_name : 'Loading...'}</h2>
+              <p>{repository ? repository.description : 'Loading...'}</p>
+            </div>
           </div>
-          <p>{repository ? repository.description : 'Loading...'}</p>
+
+          <RepositoryStatusList>
+            <li>
+              <div>
+                <FiAlertCircle size={12} />
+                <span>Open Issues</span>
+              </div>
+              <strong>
+                {repository ? repository.open_issues_count : '...'}
+              </strong>
+            </li>
+            <li>
+              <div>
+                <FiGithub size={12} />
+                <span>Forks</span>
+              </div>
+              <strong>{repository ? repository.forks_count : '...'}</strong>
+            </li>
+            <li>
+              <div>
+                <FiStar size={12} />
+                <span>Stars</span>
+              </div>
+              <strong>
+                {repository ? repository.stargazers_count : '...'}
+              </strong>
+            </li>
+            <li>
+              <div>
+                <FiTag size={12} />
+                <span>Latest release</span>
+              </div>
+              <strong>{latestRelease ? latestRelease.tag_name : '...'}</strong>
+            </li>
+            <li>
+              <div>
+                <FiGitCommit size={12} />
+                <span>Latest Commit</span>
+              </div>
+              <strong>
+                {latestCommit
+                  ? format(
+                      new Date(latestCommit.commit.author.date),
+                      'MMM d, yyyy',
+                    )
+                  : '...'}
+              </strong>
+            </li>
+          </RepositoryStatusList>
         </RepositoryDetailsPanel>
+
         <AboutOwnerPanel>
           <a
             target="_blank"
