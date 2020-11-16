@@ -84,6 +84,13 @@ export const AboutOwnerPanel = styled.aside`
       color: #fff;
       text-align: center;
     }
+
+    h2 {
+      font-weight: 300;
+      font-size: 14px;
+      color: #fff;
+      text-align: center;
+    }
   }
 
   p {

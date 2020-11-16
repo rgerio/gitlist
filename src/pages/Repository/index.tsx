@@ -29,6 +29,7 @@ interface Repository {
 }
 
 interface User {
+  login: string;
   name: string;
   bio: string;
   html_url: string;
@@ -88,7 +89,9 @@ const Repository: React.FC = () => {
               }
               alt="User"
             />
-            <h1>{repository ? repository.owner.login : 'Loading...'}</h1>
+
+            <h1>{user ? user.name : 'Loading...'}</h1>
+            <h2>{user ? `(${user.login})` : 'Loading...'}</h2>
           </a>
 
           {user ? (
