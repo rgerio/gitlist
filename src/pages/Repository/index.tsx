@@ -12,11 +12,15 @@ import {
   FiStar,
   FiTag,
 } from 'react-icons/fi';
+
 import {
   Container,
   Main,
   RepositoryDetailsPanel,
-  RepositoryStatusList,
+  RepositoryTitleSection,
+  RepositoryStatusSection,
+  IssuesSection,
+  IssuesList,
   AboutOwnerPanel,
   UserDetailsList,
   UserPublicRepoList,
@@ -30,17 +34,9 @@ interface RepositoryParams {
   repository: string;
 }
 
-interface Repository {
-  full_name: string;
-  description: string;
-  owner: {
-    login: string;
-    avatar_url: string;
-  };
-  stargazers_count: number;
-  watchers_count: number;
-  forks_count: number;
-  open_issues_count: number;
+interface MinifiedUser {
+  login: string;
+  avatar_url: string;
 }
 
 interface User {
@@ -54,6 +50,16 @@ interface User {
   public_gists: number;
 }
 
+interface Repository {
+  full_name: string;
+  description: string;
+  owner: MinifiedUser;
+  stargazers_count: number;
+  watchers_count: number;
+  forks_count: number;
+  open_issues_count: number;
+}
+
 interface Release {
   html_url: string;
   tag_name: string;
@@ -65,8 +71,15 @@ interface Commit {
     author: {
       date: string;
     };
-    url: string;
+    html_url: string;
   };
+}
+
+interface Issue {
+  id: number;
+  html_url: string;
+  title: string;
+  user: MinifiedUser;
 }
 
 const Repository: React.FC = () => {
@@ -75,6 +88,7 @@ const Repository: React.FC = () => {
   const [user, setUser] = useState<User>();
   const [latestRelease, setLatestRelease] = useState<Release>();
   const [latestCommit, setLatestCommit] = useState<Commit>();
+  const [issues, setIssues] = useState<Issue[]>([]);
 
   useEffect(() => {
     api.get<Repository>(`repos/${params.repository}`).then((response) => {
@@ -96,6 +110,10 @@ const Repository: React.FC = () => {
     api.get<Commit[]>(`repos/${params.repository}/commits`).then((response) => {
       setLatestCommit(response.data[0]);
     });
+
+    api.get<Issue[]>(`repos/${params.repository}/issues`).then((response) => {
+      setIssues(response.data);
+    });
   }, [params.repository]);
 
   return (
@@ -104,7 +122,7 @@ const Repository: React.FC = () => {
 
       <Main>
         <RepositoryDetailsPanel>
-          <div>
+          <RepositoryTitleSection>
             <img
               src={
                 repository
@@ -118,9 +136,9 @@ const Repository: React.FC = () => {
               <h2>{repository ? repository.full_name : 'Loading...'}</h2>
               <p>{repository ? repository.description : 'Loading...'}</p>
             </div>
-          </div>
+          </RepositoryTitleSection>
 
-          <RepositoryStatusList>
+          <RepositoryStatusSection>
             <li>
               <div>
                 <FiAlertCircle size={12} />
@@ -167,7 +185,34 @@ const Repository: React.FC = () => {
                   : '...'}
               </strong>
             </li>
-          </RepositoryStatusList>
+          </RepositoryStatusSection>
+
+          <IssuesSection>
+            <h2>Open Issues</h2>
+            <IssuesList>
+              {issues.map((issue) => (
+                <li key={issue.id}>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={issue.html_url}
+                  >
+                    <FiAlertCircle size={16} />
+                    <div>
+                      <strong>{issue.title}</strong>
+                      <div>
+                        <img
+                          src={issue.user.avatar_url}
+                          alt={issue.user.login}
+                        />
+                        <p>{issue.user.login}</p>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+              ))}
+            </IssuesList>
+          </IssuesSection>
         </RepositoryDetailsPanel>
 
         <AboutOwnerPanel>

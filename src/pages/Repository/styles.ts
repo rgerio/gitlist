@@ -15,50 +15,46 @@ export const RepositoryDetailsPanel = styled.div`
   border-radius: 8px;
   width: 67%;
   min-height: 750px;
+`;
 
-  > div {
-    display: flex;
-    align-items: center;
-    margin-bottom: 48px;
-    position: relative;
+export const RepositoryTitleSection = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 48px;
+  position: relative;
 
-    &::after {
-      content: '';
-      width: 100%;
-      height: 1px;
-      background: #f5f5f5;
-      margin: -16px;
-      position: absolute;
-      bottom: 0;
-    }
-
-    img {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-    }
-
-    div {
-      margin-left: 16px;
-
-      h2 {
-        font-weight: 600;
-        font-size: 28px;
-      }
-
-      p {
-        color: rgb(106, 115, 125);
-        margin-top: 4px;
-      }
-    }
+  &::after {
+    content: '';
+    width: 100%;
+    height: 1px;
+    background: #f5f5f5;
+    margin: -16px;
+    position: absolute;
+    bottom: 0;
   }
 
-  p {
-    font-size: 16px;
+  img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+  }
+
+  div {
+    margin-left: 16px;
+
+    h2 {
+      font-weight: 600;
+      font-size: 28px;
+    }
+
+    p {
+      color: rgb(106, 115, 125);
+      margin-top: 4px;
+    }
   }
 `;
 
-export const RepositoryStatusList = styled.ul`
+export const RepositoryStatusSection = styled.ul`
   list-style: none;
   display: flex;
   margin-top: 56px;
@@ -108,6 +104,64 @@ export const RepositoryStatusList = styled.ul`
       font-size: 24px;
       margin-top: 8px;
       margin: 8px auto 0;
+    }
+  }
+`;
+
+export const IssuesSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 32px;
+
+  h2 {
+    margin-bottom: 16px;
+  }
+`;
+
+export const IssuesList = styled.ul`
+  list-style: none;
+
+  li {
+    & + li {
+      margin-top: 16px;
+    }
+
+    a {
+      display: flex;
+      text-decoration: none;
+      color: #000;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      svg {
+        color: #6ec54c;
+      }
+
+      div {
+        margin-left: 8px;
+
+        strong {
+        }
+
+        div {
+          display: flex;
+          align-items: center;
+          margin-top: 4px;
+
+          img {
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+          }
+
+          p {
+            margin-left: 8px;
+            font-size: 14px;
+          }
+        }
+      }
     }
   }
 `;
