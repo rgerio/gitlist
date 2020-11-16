@@ -17,11 +17,17 @@ export const RepositoryDetailsPanel = styled.div`
   min-height: 750px;
 `;
 
-export const RepositoryTitleSection = styled.div`
+export const RepositoryTitleSection = styled.a`
   display: flex;
   align-items: center;
   margin-bottom: 48px;
   position: relative;
+  color: #000;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
 
   &::after {
     content: '';
@@ -59,6 +65,8 @@ export const RepositoryStatusSection = styled.ul`
   display: flex;
   margin-top: 56px;
   width: 100%;
+  display: flex;
+  justify-content: center;
 
   li {
     display: flex;
@@ -66,11 +74,13 @@ export const RepositoryStatusSection = styled.ul`
     padding: 16px;
     background: #aaaaaa20;
     flex: 1;
+    max-width: 125px;
     border-radius: 8px;
     transition: background-color 0.2s;
 
     &:last-child {
       flex: 1.4;
+      max-width: 160px;
 
       strong {
         font-size: 20px;
@@ -106,12 +116,23 @@ export const RepositoryStatusSection = styled.ul`
       margin: 8px auto 0;
     }
   }
+
+  a {
+    display: flex;
+    flex-direction: column;
+    color: #000;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 `;
 
 export const IssuesSection = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 32px;
+  margin-top: 40px;
 
   h2 {
     margin-bottom: 16px;

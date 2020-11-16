@@ -71,8 +71,8 @@ interface Commit {
     author: {
       date: string;
     };
-    html_url: string;
   };
+  html_url: string;
 }
 
 interface Issue {
@@ -122,7 +122,7 @@ const Repository: React.FC = () => {
 
       <Main>
         <RepositoryDetailsPanel>
-          <RepositoryTitleSection>
+          <RepositoryTitleSection href="/">
             <img
               src={
                 repository
@@ -164,27 +164,45 @@ const Repository: React.FC = () => {
                 {repository ? repository.stargazers_count : '...'}
               </strong>
             </li>
-            <li>
-              <div>
-                <FiTag size={12} />
-                <span>Latest release</span>
-              </div>
-              <strong>{latestRelease ? latestRelease.tag_name : '...'}</strong>
-            </li>
-            <li>
-              <div>
-                <FiGitCommit size={12} />
-                <span>Latest Commit</span>
-              </div>
-              <strong>
-                {latestCommit
-                  ? format(
-                      new Date(latestCommit.commit.author.date),
-                      'MMM d, yyyy',
-                    )
-                  : '...'}
-              </strong>
-            </li>
+
+            {latestRelease && (
+              <li>
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={latestRelease.html_url}
+                >
+                  <div>
+                    <FiTag size={12} />
+                    <span>Latest release</span>
+                  </div>
+                  <strong>{latestRelease.tag_name}</strong>
+                </a>
+              </li>
+            )}
+
+            {latestCommit && (
+              <li>
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={latestCommit.html_url}
+                >
+                  <div>
+                    <FiGitCommit size={12} />
+                    <span>Latest Commit</span>
+                  </div>
+                  <strong>
+                    {latestCommit
+                      ? format(
+                          new Date(latestCommit.commit.author.date),
+                          'MMM d, yyyy',
+                        )
+                      : '...'}
+                  </strong>
+                </a>
+              </li>
+            )}
           </RepositoryStatusSection>
 
           <IssuesSection>
@@ -259,18 +277,30 @@ const Repository: React.FC = () => {
 
               <UserPublicRepoList>
                 <li>
-                  <div>
-                    <FiGlobe size={12} />
-                    <span>Repositories</span>
-                  </div>
-                  <strong>{user.public_repos}</strong>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={`https://github.com/${user.login}`}
+                  >
+                    <div>
+                      <FiGlobe size={12} />
+                      <span>Repositories</span>
+                    </div>
+                    <strong>{user.public_repos}</strong>
+                  </a>
                 </li>
                 <li>
-                  <div>
-                    <FiCode size={12} />
-                    <span>Public Gists</span>
-                  </div>
-                  <strong>{user.public_gists}</strong>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={`https://gist.github.com/${user.login}`}
+                  >
+                    <div>
+                      <FiCode size={12} />
+                      <span>Public Gists</span>
+                    </div>
+                    <strong>{user.public_gists}</strong>
+                  </a>
                 </li>
               </UserPublicRepoList>
             </>
