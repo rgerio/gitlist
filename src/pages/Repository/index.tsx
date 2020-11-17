@@ -54,6 +54,7 @@ interface Repository {
   full_name: string;
   description: string;
   owner: MinifiedUser;
+  html_url: string;
   stargazers_count: number;
   watchers_count: number;
   forks_count: number;
@@ -122,7 +123,11 @@ const Repository: React.FC = () => {
 
       <Main>
         <RepositoryDetailsPanel>
-          <RepositoryTitleSection href="/">
+          <RepositoryTitleSection
+            target="_blank"
+            rel="noopener noreferrer"
+            href={repository ? repository.html_url : '/'}
+          >
             <img
               src={
                 repository
