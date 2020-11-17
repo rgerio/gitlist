@@ -214,7 +214,7 @@ const Repository: React.FC = () => {
             <h2>Open Issues</h2>
             <IssuesList>
               {issues.map((issue) => (
-                <li key={issue.id}>
+                <li key={String(issue.id)}>
                   <a
                     target="_blank"
                     rel="noopener noreferrer"
