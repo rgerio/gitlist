@@ -119,7 +119,7 @@ const Repository: React.FC = () => {
 
   return (
     <Container>
-      <Header />
+      <Header backButtonShown />
 
       <Main>
         <RepositoryDetailsPanel>
@@ -253,7 +253,7 @@ const Repository: React.FC = () => {
               alt="User"
             />
 
-            <h1>{user ? user.name : 'Loading...'}</h1>
+            <h1>{user ? user.name || user.login : 'Loading...'}</h1>
             <h2>{user ? `(${user.login})` : 'Loading...'}</h2>
           </a>
 
@@ -262,22 +262,27 @@ const Repository: React.FC = () => {
               <p>{user.bio}</p>
 
               <UserDetailsList>
-                <li>
-                  <FiMapPin size={14} />
-                  <span>{user.location}</span>
-                </li>
-                <li>
-                  <FiLink size={14} />
-                  <span>
-                    <a
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      href={user.blog}
-                    >
-                      {user.blog}
-                    </a>
-                  </span>
-                </li>
+                {user.location && (
+                  <li>
+                    <FiMapPin size={14} />
+                    <span>{user.location}</span>
+                  </li>
+                )}
+
+                {user.blog && (
+                  <li>
+                    <FiLink size={14} />
+                    <span>
+                      <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href={user.blog}
+                      >
+                        {user.blog}
+                      </a>
+                    </span>
+                  </li>
+                )}
               </UserDetailsList>
 
               <UserPublicRepoList>

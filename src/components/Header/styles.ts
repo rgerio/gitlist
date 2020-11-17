@@ -20,10 +20,26 @@ export const HeaderContent = styled.div`
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
-
   padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-  > img {
-    height: 36px;
+  a {
+    img {
+      height: 36px;
+    }
+  }
+
+  button {
+    background: none;
+    border: none;
+    border-radius: 50%;
+    padding: 2px;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background: #00000020;
+    }
   }
 `;
