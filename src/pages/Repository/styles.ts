@@ -22,8 +22,6 @@ export const RepositoryTitleSection = styled.a`
   align-items: center;
   margin-bottom: 48px;
   position: relative;
-  color: #000;
-  text-decoration: none;
 
   &:hover {
     text-decoration: underline;
@@ -120,8 +118,6 @@ export const RepositoryStatusSection = styled.ul`
   a {
     display: flex;
     flex-direction: column;
-    color: #000;
-    text-decoration: none;
 
     &:hover {
       text-decoration: underline;
@@ -149,8 +145,6 @@ export const IssuesList = styled.ul`
 
     a {
       display: flex;
-      text-decoration: none;
-      color: #000;
 
       &:hover {
         text-decoration: underline;
@@ -266,9 +260,6 @@ export const UserDetailsList = styled.ul`
       color: #fff;
 
       a {
-        color: #fff;
-        text-decoration: none;
-
         &:hover {
           text-decoration: underline;
         }
