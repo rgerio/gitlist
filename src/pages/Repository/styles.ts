@@ -13,7 +13,7 @@ export const RepositoryDetailsPanel = styled.div`
   margin: 24px 16px;
   padding: 32px;
   border-radius: 8px;
-  width: 67%;
+  flex: 2;
   min-height: 750px;
 `;
 
@@ -60,11 +60,19 @@ export const RepositoryTitleSection = styled.a`
 
 export const RepositoryStatusSection = styled.ul`
   list-style: none;
-  display: flex;
   margin-top: 56px;
   width: 100%;
   display: flex;
   justify-content: center;
+
+  @media (max-width: 680px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  @media (max-width: 530px) {
+    grid-template-columns: 1fr 1fr;
+  }
 
   li {
     display: flex;
@@ -76,9 +84,19 @@ export const RepositoryStatusSection = styled.ul`
     border-radius: 8px;
     transition: background-color 0.2s;
 
+    @media (max-width: 680px) {
+      flex: 1.4;
+      max-width: unset;
+      margin: 3px;
+    }
+
     &:last-child {
       flex: 1.4;
       max-width: 160px;
+
+      @media (max-width: 680px) {
+        max-width: unset;
+      }
 
       strong {
         font-size: 20px;
@@ -90,7 +108,9 @@ export const RepositoryStatusSection = styled.ul`
     }
 
     & + li {
-      margin-left: 8px;
+      @media (min-width: 680px) {
+        margin-left: 8px;
+      }
     }
 
     div {
@@ -186,7 +206,7 @@ export const AboutOwnerPanel = styled.aside`
   margin: 24px 16px;
   padding: 32px;
   border-radius: 8px;
-  width: 33%;
+  flex: 1;
   max-height: 674px;
   display: flex;
   flex-direction: column;
@@ -194,6 +214,10 @@ export const AboutOwnerPanel = styled.aside`
   position: relative;
   margin-top: 100px;
   padding-top: 96px;
+
+  @media (max-width: 1000px) {
+    display: none;
+  }
 
   a {
     display: flex;
