@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { FiPlus } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
@@ -12,8 +12,51 @@ import {
 } from './styles';
 
 import Header from '../../components/Header';
+import api from '../../services/api';
+
+interface Repository {
+  full_name: number;
+  description: string;
+  owner: {
+    login: string;
+    avatar_url: string;
+  };
+}
 
 const Dashboard: React.FC = () => {
+  // const [repositoryNames, setRepositoryNames] = useState<string[]>([]);
+  const [repositories, setRepositories] = useState<Repository[]>([]);
+  const [repositoryToAdd, setRepositoryToAdd] = useState('');
+
+  const handleAddRepository = useCallback(
+    (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+
+      api
+        .get<Repository>(`repos/${repositoryToAdd}`)
+        .then((response) => {
+          const repository = response.data;
+          setRepositories((oldRepositories) => [
+            repository,
+            ...oldRepositories,
+          ]);
+
+          setRepositoryToAdd('');
+        })
+        .catch(() => {
+          console.log('Repository not found');
+        });
+    },
+    [repositoryToAdd],
+  );
+
+  const handleChangeAddRepositoryInput = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setRepositoryToAdd(event.target.value);
+    },
+    [],
+  );
+
   return (
     <Container>
       <Header />
@@ -22,8 +65,12 @@ const Dashboard: React.FC = () => {
         <RepositoriesPanel>
           <SectionTitle>Repositories</SectionTitle>
 
-          <Form>
-            <input placeholder="Type a repository name..." />
+          <Form onSubmit={handleAddRepository}>
+            <input
+              placeholder="Type a repository name..."
+              value={repositoryToAdd}
+              onChange={handleChangeAddRepositoryInput}
+            />
             <button type="submit">
               <FiPlus size={16} />
               Add
@@ -31,30 +78,19 @@ const Dashboard: React.FC = () => {
           </Form>
 
           <RepositoryList>
-            <li>
-              <Link to="repository/facebook/react">
-                <div>
-                  <img src="https://github.com/example.png" alt="User" />
-                </div>
-                fulanosilva/repo-01
-              </Link>
-            </li>
-            <li>
-              <Link to="repository/facebook/react-native">
-                <div>
-                  <img src="https://github.com/example.png" alt="User" />
-                </div>
-                user/another-repo-with-a-very-very-very-very-long-name
-              </Link>
-            </li>
-            <li>
-              <Link to="repository/facebook/react">
-                <div>
-                  <img src="https://github.com/example.png" alt="User" />
-                </div>
-                another-user/repo-01
-              </Link>
-            </li>
+            {repositories.map((repository) => (
+              <li key={repository.full_name}>
+                <Link to={`repository/${repository.full_name}`}>
+                  <div>
+                    <img
+                      src={repository.owner.avatar_url}
+                      alt={repository.owner.login}
+                    />
+                  </div>
+                  {repository.full_name}
+                </Link>
+              </li>
+            ))}
           </RepositoryList>
         </RepositoriesPanel>
       </Main>
