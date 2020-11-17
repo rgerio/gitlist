@@ -7,6 +7,7 @@ export const Main = styled.main`
   justify-content: center;
   max-width: 1200px;
   width: 100%;
+  min-width: 380px;
   margin: 0 auto;
 `;
 
@@ -31,6 +32,10 @@ export const Form = styled.form`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+  }
 
   input {
     background: #f5f5f5;
@@ -57,6 +62,12 @@ export const Form = styled.form`
     font-weight: 600;
     margin-left: 8px;
 
+    @media (max-width: 480px) {
+      width: 100%;
+      margin-left: 0px;
+      margin-top: 8px;
+    }
+
     svg {
       color: #fff;
       margin-right: 8px;
@@ -66,6 +77,7 @@ export const Form = styled.form`
 
 export const RepositoryList = styled.ul`
   list-style: none;
+  margin-top: 24px;
 
   li {
     background: #f5f5f5;
@@ -80,6 +92,10 @@ export const RepositoryList = styled.ul`
     &:hover {
       transform: translateX(10px);
       background: #eee;
+
+      a svg {
+        color: #00000055;
+      }
 
       &::before {
         content: '';
@@ -99,23 +115,66 @@ export const RepositoryList = styled.ul`
     }
 
     a {
-      color: #497fc0;
-      text-decoration: none;
-      font-weight: 600;
       display: flex;
+      align-items: center;
+      justify-content: space-between;
       margin-bottom: 8px;
 
-      img {
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        margin-right: 16px;
-        border: 1px solid rgba(0, 0, 0, 0.3);
+      div {
+        display: flex;
+        align-items: center;
+        margin-right: 8px;
+
+        img {
+          width: 56px;
+          height: 56px;
+          min-width: 56px;
+          border-radius: 50%;
+          margin-right: 16px;
+          border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        div {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+
+          h2 {
+            color: #497fc0;
+            font-weight: 600;
+            font-size: 20px;
+          }
+
+          p {
+            margin-top: 4px;
+            font-size: 16px;
+          }
+        }
       }
 
       svg {
-        color: #70c54e;
-        margin-right: 8px;
+        color: #00000030;
+      }
+    }
+
+    button {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      border: none;
+      background: none;
+      padding: 8px;
+      border-radius: 50%;
+
+      &:hover {
+        background: #00000020;
+        svg {
+          color: #000000;
+        }
+      }
+
+      svg {
+        color: #00000030;
       }
     }
   }

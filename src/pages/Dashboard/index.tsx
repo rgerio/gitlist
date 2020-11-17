@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { FiPlus } from 'react-icons/fi';
+import { FiChevronRight, FiPlus, FiX } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
 import {
@@ -15,7 +15,7 @@ import Header from '../../components/Header';
 import api from '../../services/api';
 
 interface Repository {
-  full_name: number;
+  full_name: string;
   description: string;
   owner: {
     login: string;
@@ -69,6 +69,14 @@ const Dashboard: React.FC = () => {
     [],
   );
 
+  const handleDeleteRepository = useCallback((repository: string) => {
+    setRepositories((oldRepositories) =>
+      oldRepositories.filter(
+        (oldRepository) => oldRepository.full_name !== repository,
+      ),
+    );
+  }, []);
+
   return (
     <Container>
       <Header />
@@ -98,9 +106,19 @@ const Dashboard: React.FC = () => {
                       src={repository.owner.avatar_url}
                       alt={repository.owner.login}
                     />
+                    <div>
+                      <h2>{repository.full_name}</h2>
+                      <p>{repository.description}</p>
+                    </div>
                   </div>
-                  {repository.full_name}
+                  <FiChevronRight size={32} />
                 </Link>
+                <button
+                  type="button"
+                  onClick={() => handleDeleteRepository(repository.full_name)}
+                >
+                  <FiX size={16} />
+                </button>
               </li>
             ))}
           </RepositoryList>
