@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { FiPlus } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
@@ -25,8 +25,20 @@ interface Repository {
 
 const Dashboard: React.FC = () => {
   // const [repositoryNames, setRepositoryNames] = useState<string[]>([]);
-  const [repositories, setRepositories] = useState<Repository[]>([]);
   const [repositoryToAdd, setRepositoryToAdd] = useState('');
+  const [repositories, setRepositories] = useState<Repository[]>(() => {
+    const storagedRepositories = localStorage.getItem('gitlist:repositories');
+
+    if (!storagedRepositories) {
+      return [];
+    }
+
+    return JSON.parse(storagedRepositories);
+  });
+
+  useEffect(() => {
+    localStorage.setItem('gitlist:repositories', JSON.stringify(repositories));
+  }, [repositories]);
 
   const handleAddRepository = useCallback(
     (event: React.FormEvent<HTMLFormElement>) => {
@@ -44,7 +56,7 @@ const Dashboard: React.FC = () => {
           setRepositoryToAdd('');
         })
         .catch(() => {
-          console.log('Repository not found');
+          alert('Repository not found');
         });
     },
     [repositoryToAdd],
