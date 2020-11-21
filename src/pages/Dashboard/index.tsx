@@ -1,6 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { FiChevronRight, FiPlus, FiX } from 'react-icons/fi';
+import {
+  FiChevronRight,
+  FiClock,
+  FiPlus,
+  FiTrendingUp,
+  FiX,
+} from 'react-icons/fi';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 import {
   Container,
@@ -9,10 +16,16 @@ import {
   SectionTitle,
   Form,
   RepositoryList,
+  DeleteButton,
+  CompareButton,
 } from './styles';
 
-import Header from '../../components/Header';
 import api from '../../services/api';
+
+import Header from '../../components/Header';
+
+import { RootState } from '../../store/modules/rootReducer';
+import { addRepositoryRequest } from '../../store/modules/comparison/actions';
 
 interface Repository {
   full_name: string;
@@ -24,6 +37,11 @@ interface Repository {
 }
 
 const Dashboard: React.FC = () => {
+  const { loadingAddRepositoryRequest } = useSelector(
+    (state: RootState) => state.comparison,
+  );
+  const dispatch = useDispatch();
+
   // const [repositoryNames, setRepositoryNames] = useState<string[]>([]);
   const [repositoryToAdd, setRepositoryToAdd] = useState('');
   const [repositories, setRepositories] = useState<Repository[]>(() => {
@@ -111,14 +129,28 @@ const Dashboard: React.FC = () => {
                       <p>{repository.description}</p>
                     </div>
                   </div>
-                  <FiChevronRight size={32} />
+                  <div>
+                    <FiChevronRight size={32} />
+                  </div>
                 </Link>
-                <button
+                <DeleteButton
                   type="button"
                   onClick={() => handleDeleteRepository(repository.full_name)}
                 >
                   <FiX size={16} />
-                </button>
+                </DeleteButton>
+                <CompareButton
+                  type="button"
+                  onClick={() =>
+                    dispatch(addRepositoryRequest(repository.full_name))
+                  }
+                >
+                  {loadingAddRepositoryRequest ? (
+                    <FiClock size={16} />
+                  ) : (
+                    <FiTrendingUp size={16} />
+                  )}
+                </CompareButton>
               </li>
             ))}
           </RepositoryList>

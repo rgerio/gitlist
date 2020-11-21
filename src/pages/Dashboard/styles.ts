@@ -123,7 +123,6 @@ export const RepositoryList = styled.ul`
       div {
         display: flex;
         align-items: center;
-        margin-right: 8px;
 
         img {
           width: 56px;
@@ -158,9 +157,6 @@ export const RepositoryList = styled.ul`
     }
 
     button {
-      position: absolute;
-      top: 4px;
-      right: 4px;
       border: none;
       background: none;
       padding: 8px;
@@ -178,4 +174,16 @@ export const RepositoryList = styled.ul`
       }
     }
   }
+`;
+
+export const DeleteButton = styled.button`
+  position: absolute;
+  top: 4px;
+  right: 4px;
+`;
+
+export const CompareButton = styled.button`
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
 `;
