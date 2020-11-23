@@ -2,20 +2,21 @@ import {
   ADD_REPOSITORY_FAILURE,
   ADD_REPOSITORY_REQUEST,
   ADD_REPOSITORY_SUCCESS,
-  ComparisonActionTypes,
-  ComparisonState,
+  DELETE_REPOSITORY,
+  RepositoryActionTypes,
+  RepositoryState,
 } from './types';
 
-const initialState: ComparisonState = {
+const initialState: RepositoryState = {
   loadingAddRepositoryRequest: false,
   errorAddRepositoryRequest: false,
-  repositoryList: [],
+  repositories: [],
 };
 
-export default function comparisonReducer(
+export default function repositoryReducer(
   state = initialState,
-  action: ComparisonActionTypes,
-): ComparisonState {
+  action: RepositoryActionTypes,
+): RepositoryState {
   switch (action.type) {
     case ADD_REPOSITORY_REQUEST:
       return {
@@ -29,7 +30,7 @@ export default function comparisonReducer(
         ...state,
         loadingAddRepositoryRequest: false,
         errorAddRepositoryRequest: false,
-        repositoryList: [...state.repositoryList, action.payload],
+        repositories: [...state.repositories, action.payload],
       };
 
     case ADD_REPOSITORY_FAILURE:
@@ -37,6 +38,13 @@ export default function comparisonReducer(
         ...state,
         loadingAddRepositoryRequest: false,
         errorAddRepositoryRequest: true,
+      };
+    case DELETE_REPOSITORY:
+      return {
+        ...state,
+        repositories: state.repositories.filter(
+          (repository) => repository.full_name !== action.payload.full_name,
+        ),
       };
 
     default:

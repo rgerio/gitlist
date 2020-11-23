@@ -1,16 +1,19 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import GlobalStyle from './styles/global';
 
-import { store } from './store';
+import { persistor, store } from './store';
 import Routes from './routes';
 
 const App: React.FC = () => {
   return (
     <Provider store={store}>
-      <Routes />
-      <GlobalStyle />
+      <PersistGate loading={<h1>Loading...</h1>} persistor={persistor}>
+        <Routes />
+        <GlobalStyle />
+      </PersistGate>
     </Provider>
   );
 };

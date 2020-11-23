@@ -8,12 +8,12 @@ import {
 
 import { RootState } from './modules/rootReducer';
 
-import { ComparisonActionTypes } from './modules/comparison/types';
+import { RepositoryActionTypes } from './modules/repository/types';
 
-export type RootAction = ComparisonActionTypes;
+export type RootAction = RepositoryActionTypes;
 
 export default (
-  reducers: Reducer<RootState, RootAction>,
+  reducers: Reducer,
   middlewares: Middleware[],
 ): Store<RootState, RootAction> => {
   const enhancer = applyMiddleware(...middlewares);

@@ -1,11 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import {
-  FiChevronRight,
-  FiClock,
-  FiPlus,
-  FiTrendingUp,
-  FiX,
-} from 'react-icons/fi';
+import React, { useCallback, useState } from 'react';
+import { FiChevronRight, FiClock, FiPlus, FiX } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -17,67 +11,31 @@ import {
   Form,
   RepositoryList,
   DeleteButton,
-  CompareButton,
 } from './styles';
-
-import api from '../../services/api';
 
 import Header from '../../components/Header';
 
 import { RootState } from '../../store/modules/rootReducer';
-import { addRepositoryRequest } from '../../store/modules/comparison/actions';
-
-interface Repository {
-  full_name: string;
-  description: string;
-  owner: {
-    login: string;
-    avatar_url: string;
-  };
-}
+import {
+  addRepositoryRequest,
+  deleteRepository,
+} from '../../store/modules/repository/actions';
 
 const Dashboard: React.FC = () => {
-  const { loadingAddRepositoryRequest } = useSelector(
-    (state: RootState) => state.comparison,
+  const { loadingAddRepositoryRequest, repositories } = useSelector(
+    (state: RootState) => state.repository,
   );
   const dispatch = useDispatch();
 
-  // const [repositoryNames, setRepositoryNames] = useState<string[]>([]);
   const [repositoryToAdd, setRepositoryToAdd] = useState('');
-  const [repositories, setRepositories] = useState<Repository[]>(() => {
-    const storagedRepositories = localStorage.getItem('gitlist:repositories');
-
-    if (!storagedRepositories) {
-      return [];
-    }
-
-    return JSON.parse(storagedRepositories);
-  });
-
-  useEffect(() => {
-    localStorage.setItem('gitlist:repositories', JSON.stringify(repositories));
-  }, [repositories]);
 
   const handleAddRepository = useCallback(
     (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
 
-      api
-        .get<Repository>(`repos/${repositoryToAdd}`)
-        .then((response) => {
-          const repository = response.data;
-          setRepositories((oldRepositories) => [
-            repository,
-            ...oldRepositories,
-          ]);
-
-          setRepositoryToAdd('');
-        })
-        .catch(() => {
-          alert('Repository not found');
-        });
+      dispatch(addRepositoryRequest(repositoryToAdd));
     },
-    [repositoryToAdd],
+    [dispatch, repositoryToAdd],
   );
 
   const handleChangeAddRepositoryInput = useCallback(
@@ -87,13 +45,12 @@ const Dashboard: React.FC = () => {
     [],
   );
 
-  const handleDeleteRepository = useCallback((repository: string) => {
-    setRepositories((oldRepositories) =>
-      oldRepositories.filter(
-        (oldRepository) => oldRepository.full_name !== repository,
-      ),
-    );
-  }, []);
+  const handleDeleteRepository = useCallback(
+    (repository: string) => {
+      dispatch(deleteRepository(repository));
+    },
+    [dispatch],
+  );
 
   return (
     <Container>
@@ -109,9 +66,18 @@ const Dashboard: React.FC = () => {
               value={repositoryToAdd}
               onChange={handleChangeAddRepositoryInput}
             />
-            <button type="submit">
-              <FiPlus size={16} />
-              Add
+            <button type="submit" disabled={loadingAddRepositoryRequest}>
+              {loadingAddRepositoryRequest ? (
+                <>
+                  <FiClock size={16} />
+                  Wait...
+                </>
+              ) : (
+                <>
+                  <FiPlus size={16} />
+                  Add
+                </>
+              )}
             </button>
           </Form>
 
@@ -139,18 +105,6 @@ const Dashboard: React.FC = () => {
                 >
                   <FiX size={16} />
                 </DeleteButton>
-                <CompareButton
-                  type="button"
-                  onClick={() =>
-                    dispatch(addRepositoryRequest(repository.full_name))
-                  }
-                >
-                  {loadingAddRepositoryRequest ? (
-                    <FiClock size={16} />
-                  ) : (
-                    <FiTrendingUp size={16} />
-                  )}
-                </CompareButton>
               </li>
             ))}
           </RepositoryList>

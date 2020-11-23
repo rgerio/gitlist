@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { all } from 'redux-saga/effects';
-import comparisonSagas from './comparison/sagas';
+import repositorySagas from './repository/sagas';
 
 export default function* rootSaga() {
-  return yield all([comparisonSagas]);
+  return yield all([repositorySagas]);
 }

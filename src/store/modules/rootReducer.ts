@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import comparisonReducer from './comparison/reducer';
+import repositoryReducer from './repository/reducer';
 
 const rootReducer = combineReducers({
-  comparison: comparisonReducer,
+  repository: repositoryReducer,
 });
 
 export default rootReducer;

@@ -51,6 +51,7 @@ export const Form = styled.form`
 
   button {
     height: 48px;
+    min-width: 112px;
     border-radius: 8px;
     background: #6ec54c;
     border: none;
@@ -179,11 +180,5 @@ export const RepositoryList = styled.ul`
 export const DeleteButton = styled.button`
   position: absolute;
   top: 4px;
-  right: 4px;
-`;
-
-export const CompareButton = styled.button`
-  position: absolute;
-  bottom: 4px;
   right: 4px;
 `;
