@@ -11,6 +11,8 @@ import {
   Form,
   RepositoryList,
   DeleteButton,
+  GreenButton,
+  Input,
 } from './styles';
 
 import Header from '../../components/Header';
@@ -22,12 +24,18 @@ import {
 } from '../../store/modules/repository/actions';
 
 const Dashboard: React.FC = () => {
-  const { loadingAddRepositoryRequest, repositories } = useSelector(
-    (state: RootState) => state.repository,
-  );
+  const {
+    loadingAddRepositoryRequest,
+    errorAddRepositoryRequest,
+    repositories,
+  } = useSelector((state: RootState) => state.repository);
   const dispatch = useDispatch();
 
   const [repositoryToAdd, setRepositoryToAdd] = useState('');
+  const [
+    hasRepositoryToAddInputFocus,
+    setHasRepositoryToAddInputFocus,
+  ] = useState(false);
 
   const handleAddRepository = useCallback(
     (event: React.FormEvent<HTMLFormElement>) => {
@@ -61,12 +69,17 @@ const Dashboard: React.FC = () => {
           <SectionTitle>Repositories</SectionTitle>
 
           <Form onSubmit={handleAddRepository}>
-            <input
+            <Input
               placeholder="Type a repository name..."
               value={repositoryToAdd}
               onChange={handleChangeAddRepositoryInput}
+              onFocus={() => setHasRepositoryToAddInputFocus(true)}
+              onBlur={() => setHasRepositoryToAddInputFocus(false)}
+              hasError={
+                errorAddRepositoryRequest && !hasRepositoryToAddInputFocus
+              }
             />
-            <button type="submit" disabled={loadingAddRepositoryRequest}>
+            <GreenButton type="submit" disabled={loadingAddRepositoryRequest}>
               {loadingAddRepositoryRequest ? (
                 <>
                   <FiClock size={16} />
@@ -78,7 +91,7 @@ const Dashboard: React.FC = () => {
                   Add
                 </>
               )}
-            </button>
+            </GreenButton>
           </Form>
 
           <RepositoryList>

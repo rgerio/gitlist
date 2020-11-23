@@ -1,4 +1,8 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+interface InputProps {
+  hasError?: boolean;
+}
 
 export const Container = styled.div``;
 
@@ -36,43 +40,50 @@ export const Form = styled.form`
   @media (max-width: 480px) {
     flex-direction: column;
   }
+`;
 
-  input {
-    background: #f5f5f5;
-    border: none;
-    padding: 16px;
-    border-radius: 8px;
-    width: 100%;
+export const Input = styled.input<InputProps>`
+  background: #f5f5f5;
+  border: none;
+  padding: 16px;
+  border-radius: 8px;
+  width: 100%;
 
-    &::placeholder {
-      color: #afafaf;
-    }
+  &::placeholder {
+    color: #afafaf;
   }
 
-  button {
-    height: 48px;
-    min-width: 112px;
-    border-radius: 8px;
-    background: #6ec54c;
-    border: none;
-    padding: 0 16px;
+  ${(props) =>
+    props.hasError &&
+    css`
+      color: #c53030;
+      border: 2px solid #c53030;
+    `}
+`;
+
+export const GreenButton = styled.button`
+  height: 48px;
+  min-width: 112px;
+  border-radius: 8px;
+  background: #6ec54c;
+  border: none;
+  padding: 0 16px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  margin-left: 8px;
+
+  @media (max-width: 480px) {
+    width: 100%;
+    margin-left: 0px;
+    margin-top: 8px;
+  }
+
+  svg {
     color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: 600;
-    margin-left: 8px;
-
-    @media (max-width: 480px) {
-      width: 100%;
-      margin-left: 0px;
-      margin-top: 8px;
-    }
-
-    svg {
-      color: #fff;
-      margin-right: 8px;
-    }
+    margin-right: 8px;
   }
 `;
 
