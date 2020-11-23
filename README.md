@@ -19,7 +19,7 @@
 - [ ] Also Implement in React Native
 - [ ] it should use ReactNavigation
 - [ ] Implement code splitting using react-loadable
-- [ ] Implement redux and redux saga
+- [X] Implement redux and redux saga
 - [ ] Optimize webpack
 - [ ] Create a [storybook] with your components
 - [ ] Test your components with [jest]
