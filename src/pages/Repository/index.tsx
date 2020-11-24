@@ -92,29 +92,35 @@ const Repository: React.FC = () => {
   const [issues, setIssues] = useState<Issue[]>([]);
 
   useEffect(() => {
-    api.get<Repository>(`repos/${params.repository}`).then((response) => {
-      setRepository(response.data);
+    try {
+      api.get<Repository>(`repos/${params.repository}`).then((response) => {
+        setRepository(response.data);
 
-      api
-        .get<User>(`users/${response.data.owner.login}`)
-        .then((userResponse) => {
-          setUser(userResponse.data);
-        });
-    });
-
-    api
-      .get<Release[]>(`repos/${params.repository}/releases`)
-      .then((response) => {
-        setLatestRelease(response.data[0]);
+        api
+          .get<User>(`users/${response.data.owner.login}`)
+          .then((userResponse) => {
+            setUser(userResponse.data);
+          });
       });
 
-    api.get<Commit[]>(`repos/${params.repository}/commits`).then((response) => {
-      setLatestCommit(response.data[0]);
-    });
+      api
+        .get<Release[]>(`repos/${params.repository}/releases`)
+        .then((response) => {
+          setLatestRelease(response.data[0]);
+        });
 
-    api.get<Issue[]>(`repos/${params.repository}/issues`).then((response) => {
-      setIssues(response.data);
-    });
+      api
+        .get<Commit[]>(`repos/${params.repository}/commits`)
+        .then((response) => {
+          setLatestCommit(response.data[0]);
+        });
+
+      api.get<Issue[]>(`repos/${params.repository}/issues`).then((response) => {
+        setIssues(response.data);
+      });
+    } catch {
+      console.log('Failed to load repository data');
+    }
   }, [params.repository]);
 
   return (

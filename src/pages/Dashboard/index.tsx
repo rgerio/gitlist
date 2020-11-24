@@ -114,6 +114,7 @@ const Dashboard: React.FC = () => {
                   </div>
                 </Link>
                 <DeleteButton
+                  data-testid="delete-repository-button"
                   type="button"
                   onClick={() => handleDeleteRepository(repository.full_name)}
                 >

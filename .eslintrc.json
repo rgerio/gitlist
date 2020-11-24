@@ -33,6 +33,10 @@
     "react/jsx-curly-newline": "off",
     "camelcase": "off",
     "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],
+    "import/no-extraneous-dependencies": [
+      "error",
+      { "devDependencies": ["**/*.test.ts", "**/*.test.tsx"] }
+    ],
     "import/prefer-default-export": "off",
     "import/extensions": [
       "error",
