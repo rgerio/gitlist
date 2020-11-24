@@ -22,7 +22,7 @@
 - [X] Implement redux and redux saga
 - [ ] Optimize webpack
 - [ ] Create a [storybook] with your components
-- [ ] Test your components with [jest]
+- [X] Test your components with [jest]
 
 [storybook]: https://github.com/storybooks/storybook
 [jest]: https://jest-everywhere.now.sh

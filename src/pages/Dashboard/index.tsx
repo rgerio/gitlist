@@ -70,6 +70,7 @@ const Dashboard: React.FC = () => {
 
           <Form onSubmit={handleAddRepository}>
             <Input
+              data-testid="repository-input"
               placeholder="Type a repository name..."
               value={repositoryToAdd}
               onChange={handleChangeAddRepositoryInput}
